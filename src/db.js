@@ -1,6 +1,16 @@
 
 const mongoose = require('mongoose');
 
+const uri = process.env.MONGODB_URI 
+if (!uri){
+    console.error('MongoDB connection string missing');
+    process.exit(1);
+}
+
+module.exports.connect = () => {
+    return mongoose.connect(uri);
+};
+
 module.exports ={
     connect: DB_HOST =>{
         mongoose.set('useNewUrlParser', true);
@@ -22,3 +32,4 @@ module.exports ={
         mongoose.connection.close();
     }
 };
+
