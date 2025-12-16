@@ -1,15 +1,13 @@
 
 const mongoose = require('mongoose');
 
-const uri = process.env.MONGODB_URI 
-if (!uri){
+const DB_HOST = process.env.MONGODB_URI; 
+if (!DB_HOST){
     console.error('MongoDB connection string missing');
     process.exit(1);
 }
 
-module.exports.connect = () => {
-    return mongoose.connect(uri);
-};
+
 
 module.exports ={
     connect: DB_HOST =>{
@@ -26,6 +24,10 @@ module.exports ={
                 'MongoDB connection error. Please make sure MongoDB is running.'
             );
             process.exit();
+        });
+
+        mongoose.connection.once('open',()=>{
+            console.log('Connected to MongoDB database');
         });
     },
     close: ()=>{
